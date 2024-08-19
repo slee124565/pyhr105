@@ -163,3 +163,4 @@ cython_debug/
 
 # pyhr105
 secret.key
+secret
