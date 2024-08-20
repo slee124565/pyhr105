@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+
+<head>
+    <!-- 為了解決chatbot.js 跟 recruitment 兩個專案js打架的問題（詳細請參考：https://github.com/zloirock/core-js/issues/845），目前先引入此polyfill作為暫時解法 -->
+    <script type="text/javascript" src="https://static.104.com.tw/104main/vipphp/main/js/polyfill/es6-string-polyfills.js?v=202408151851"></script>
+    <meta charset="UTF-8">
+
+    
+    <meta name="robots" content="noindex,nofollow,noarchive">
+    <link rel="icon" href="/favicon.ico">
+    <!--[if lt IE 9]>
+    <script src="https://static.104.com.tw/104main/js/html5shiv.js"></script>
+    <![endif]-->
+    <script>
+		var NEW_VIP_DOMAIN = "vip.104.com.tw";
+	</script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.104.com.tw/recruitment/vip25/css/chunk-vendors.ae8a9861.css" />
+<link rel="stylesheet" type="text/css" href="https://cdn.104.com.tw/recruitment/vip25/css/vip25Entry.c6490c60.css" />
+<script type="text/javascript" src="https://cdn.104.com.tw/recruitment/vip25/js/chunk-vendors.5a5a5f21.js" charset="UTF-8"></script>
+<script type="text/javascript" src="https://cdn.104.com.tw/recruitment/vip25/js/vip25Entry.24daa6f0.js" charset="UTF-8"></script>
+<title>查詢人才 |  104  招募管理</title>
+
+    <script type="text/javascript">
+        var VIP_DOMAIN = 'https://vip.104.com.tw';
+        var firebaseConfig = {
+            apiKey: "AIzaSyBfr-f61A44iR2gJ4UqdIdN8GDLzu8IluM",
+            authDomain: "push-message-prod.firebaseapp.com",
+            databaseURL: "https://push-message-prod.firebaseio.com",
+            projectId: "push-message-prod",
+            storageBucket: "",
+            messagingSenderId: "1017695955587",
+            appId: "1:1017695955587:web:af9a4b677287d7dba889b6"
+        };
+        var fcmUsePublicKey = "BJhhDc7oiGsZZLmj60W05h3k8oYylrYvMi6RSKjvFHn9aBeX3gnrWP9PPiOrbg6MsRTfH_H6jgZPZjKEP2d8vx4";
+    </script>
+
+    <script type="text/javascript" src="https://static.104.com.tw/104main/vipphp/main/js/lib/jquery-3.6.0.min.js?v=202408151851"></script>
+    <script type="text/javascript" src="https://static.104.com.tw/104main/vipphp/main/js/lib/jquery-migrate-3.4.0.min.js?v=202408151851"></script>
+    <script type="text/javascript" src="https://static.104.com.tw/104main/common/browser.3.0.min.js?v=202408151851" charset="UTF-8"></script>
+
+    <script type="text/javascript" src="https://static.104.com.tw/104i/js/api/log/e104.log.latest.js?v=202408151851" charset="UTF-8"></script>
+
+    <!-- 內涵CRM代登解析Cookie -->
+    <script type="text/javascript" src="https://static.104.com.tw/104main/vipphp/main/js/common.js?v=202408151851" charset="UTF-8"></script>
+
+    <!-- 全域 logoutManager lib  -->
+    <script type="text/javascript" src="https://cdn.104.com.tw/recruitment/static/lib/logoutManager/logoutManager.min.js?v=202408151851"></script>
+
+    <!--  -->
+    <script type="text/javascript" src="https://static.104.com.tw/104main/vipphp/main/next/tools/npmCommon.js?v=202408151851"></script>
+    <!-- 前景推播 -->
+    <script type="text/javascript" src="https://static.104.com.tw/104main/vipphp/main/js/foregroundPush.js?v=202408151851"></script>
+
+        <link rel="stylesheet" type="text/css" href="https://cdn.104.com.tw/designer-icons/1.1.11/style.css?v=202408151851">
+    <script type="text/javascript" src="https://static.104.com.tw/104main/libs/mit/vue/2.6.12/vue.min.js?v=202408151851" charset="UTF-8"></script>
+    <script type="text/javascript" src="https://cdn.104.com.tw/msc/assets/js/msc-resume-v1.js?v=202408151851" charset="UTF-8"></script>
+    
+
+    <script>
+        // 基本Header設定
+    var headerBasic = {
+        homeUrl: '/index/index',
+        companyName: '費米股份有限公司',
+        userName: '薛立民',
+        changePasswordUrl: '/rms/account/editor?changePwd=1',
+        logoutUrl: '/oidc/logout',
+        logoutClick: function(event) {
+            event.preventDefault();
+            window.$EventBus_logoutModal.$emit('refreshLogoutModalAndShow');
+        },
+        ajaxGetFaqInfoUrl: '/feedback/ajaxGetFaqInfo',
+        faqSupport: {
+            url: '/faq/crmSupport/widgetIndex',
+            hiddenInput: [{
+                name: 'reaction_position',
+                value: '查詢>查詢人才>履歷詳細頁'
+            },
+                {
+                    name: 'reaction_search_kw',
+                    value: '查詢人才 履歷'
+                }
+            ]
+        },
+        faqFeedback: {
+            url: '/faq/crmSupport/feedback',
+            hiddenInput: [{
+                name: 'reaction_position',
+                value: '查詢>查詢人才>履歷詳細頁'
+            },
+                {
+                    name: 'reaction_search_kw',
+                    value: '查詢人才 履歷'
+                },
+                {
+                    name: 'description',
+                    value: ''
+                },
+                {
+                    name: 'reflection_category',
+                    value: ''
+                }
+            ]
+        },
+        faqDetail: {
+            url: '/faq/crmSupport/detail',
+            hiddenInput: [{
+                name: 'reaction_position',
+                value: '查詢>查詢人才>履歷詳細頁'
+            },
+                {
+                    name: 'reaction_search_kw',
+                    value: '查詢人才 履歷'
+                }
+            ]
+        },
+        userEmail:'lee.shiueh@flh.com.tw',
+        companyLogo: 'https://static.104.com.tw/b_profile/cust_picture/9773/130000000049773/logo.png?1582013386'
+    }
+    // 基本Footer設定
+    var footerBasic = {
+        memberUrl: 'https://static.104.com.tw/104main/vipphp/main/htm/member/warning.html',
+        copyRightDate: '2024'
+    }
+</script>
+
+<script>
+var headerMenuAdd = (function() {
+    var menu = [];
+    var set = function(content, index, keyName) {
+        if(index !== undefined && keyName !== undefined) {
+            if(menu[index] && Array.isArray(menu[index][keyName])){
+                try{
+                    menu[index][keyName].push(content);
+                }
+                catch(e){
+                    console.log(e);
+                }
+            }
+            else {
+                try{
+                    menu[index][keyName] = [];
+                    menu[index][keyName].push(content);
+                }
+                catch(e){
+                    console.log(e);
+                }
+            }
+        }
+        else{
+            menu.push(content);
+        }
+    }
+    var assign = function(obj, index, keyName, subIndex) {
+        if(index !== undefined && keyName !== undefined) {
+            if(menu[index] && Array.isArray(menu[index][keyName])){
+                var newObj = mixinObject([
+                    menu[index][keyName][subIndex],
+                    obj
+                ]);
+                menu[index][keyName][subIndex] = newObj;
+            }
+        }
+    }
+
+    var get = function() {
+        return menu || [];
+    };
+    return { get: get, set: set, assign: assign };
+})();
+
+headerMenuAdd.set({"name":"cust","text":"\u516c\u53f8","href":"javascript:void(0);","target":"","className":"vip-cust","active":false,"gtmName":""});headerMenuAdd.set({"text":"\u516c\u53f8\u8cc7\u6599","divider":false,"new":false,"target":"","active":false,"resumeAccessRestriction":""}, 0, 'children');headerMenuAdd.assign({ href: "/cust/master" }, 0, 'children', 0);headerMenuAdd.set({"text":"\u7d44\u7e54\u8a2d\u5b9a","divider":false,"new":false,"target":"","active":false,"resumeAccessRestriction":""}, 0, 'children');headerMenuAdd.assign({ href: "/rms/organization" }, 0, 'children', 1);headerMenuAdd.set({"text":"\u5ee3\u544a\u7ba1\u7406","divider":false,"new":false,"target":"","active":false,"resumeAccessRestriction":""}, 0, 'children');headerMenuAdd.assign({ href: "/rms/ad/status" }, 0, 'children', 2);headerMenuAdd.set({"name":"job","text":"\u8077\u52d9","href":"javascript:void(0);","target":"","className":"vip-job","active":false,"gtmName":""});headerMenuAdd.set({"text":"\u6240\u6709\u8077\u52d9","divider":false,"new":false,"target":"","active":false,"resumeAccessRestriction":""}, 1, 'children');headerMenuAdd.assign({ href: "/job/allJobList" }, 1, 'children', 0);headerMenuAdd.set({"text":"\u6578\u64da\u7ba1\u7406","divider":false,"new":false,"target":"","active":false,"resumeAccessRestriction":""}, 1, 'children');headerMenuAdd.assign({ disabled: true, title: "此功能您尚無權限使用，請洽貴公司主要人事聯絡人開放權限" }, 1, 'children', 1);headerMenuAdd.set({"text":"\u52a0\u5f37\u66dd\u5149","divider":true,"new":false,"target":"","active":false,"resumeAccessRestriction":""}, 1, 'children');headerMenuAdd.assign({ href: "optgroup-label" }, 1, 'children', 2);headerMenuAdd.set({"text":"\u7126\u9ede\u8077\u7f3a","divider":false,"new":false,"target":"","active":false,"resumeAccessRestriction":""}, 1, 'children');headerMenuAdd.assign({ disabled: true, title: "此功能您尚無權限使用，請洽貴公司主要人事聯絡人開放權限" }, 1, 'children', 3);headerMenuAdd.set({"text":"\u7cbe\u9078\u5de5\u4f5c","divider":false,"new":false,"target":"","active":false,"resumeAccessRestriction":""}, 1, 'children');headerMenuAdd.assign({ disabled: true, title: "此功能您尚無權限使用，請洽貴公司主要人事聯絡人開放權限" }, 1, 'children', 4);headerMenuAdd.set({"text":"\u81ea\u52d5\u6392\u5e8f","divider":false,"new":false,"target":"","active":false,"resumeAccessRestriction":""}, 1, 'children');headerMenuAdd.assign({ disabled: true, title: "此功能您尚無權限使用，請洽貴公司主要人事聯絡人開放權限" }, 1, 'children', 5);headerMenuAdd.set({"name":"search","text":"\u67e5\u8a62","href":"javascript:void(0);","target":"","className":"vip-search","active":true,"gtmName":"","resumeAccessRestriction":"0"});headerMenuAdd.set({"text":"\u63a8\u85a6\u4eba\u624d","divider":false,"new":false,"target":"","active":false,"resumeAccessRestriction":"0"}, 2, 'children');headerMenuAdd.assign({ href: "/recommend/jobList" }, 2, 'children', 0);headerMenuAdd.set({"text":"\u67e5\u8a62\u4eba\u624d","divider":false,"new":false,"target":"","active":false,"resumeAccessRestriction":"0"}, 2, 'children');headerMenuAdd.assign({ href: "/search/listSearch" }, 2, 'children', 1);headerMenuAdd.set({"text":"\u67e5\u8a62\u914d\u5c0d","divider":false,"new":false,"target":"","active":false,"resumeAccessRestriction":"0"}, 2, 'children');headerMenuAdd.assign({ href: "/match/jobList" }, 2, 'children', 2);headerMenuAdd.set({"text":"\u4eba\u624d\u4f86\u8a2a","divider":false,"new":false,"target":"","active":false,"resumeAccessRestriction":"0"}, 2, 'children');headerMenuAdd.assign({ href: "/talentVisit/jobList" }, 2, 'children', 3);headerMenuAdd.set({"text":"\u4ee3\u78bc\u67e5\u8a62","divider":false,"new":false,"target":"","active":false,"resumeAccessRestriction":"0"}, 2, 'children');headerMenuAdd.assign({ href: "/idSearch/searchResult" }, 2, 'children', 4);headerMenuAdd.set({"text":"\u4e2d\u9ad8\u9f61\u4eba\u624d","divider":false,"new":false,"target":"_blank","active":false,"resumeAccessRestriction":"0"}, 2, 'children');headerMenuAdd.assign({ href: "https://senior.104.com.tw/50talent/b/talents?utm_source=web_104&utm_medium=vip&utm_campaign=Bapproach&custno=1a2x6bj1pp" }, 2, 'children', 5);headerMenuAdd.set({"name":"resume","text":"\u5c65\u6b77","href":"javascript:void(0);","target":"","className":"vip-resume","active":false,"gtmName":""});headerMenuAdd.set({"text":"\u61c9\u5fb5\u5c65\u6b77","divider":false,"new":false,"target":"","active":false,"resumeAccessRestriction":""}, 3, 'children');headerMenuAdd.assign({ href: "/apply/applyList" }, 3, 'children', 0);headerMenuAdd.set({"text":"\u5132\u5b58\u5c65\u6b77","divider":false,"new":false,"target":"","active":false,"resumeAccessRestriction":""}, 3, 'children');headerMenuAdd.assign({ href: "/document/folderList" }, 3, 'children', 1);headerMenuAdd.set({"text":"\u63d0\u5831\u6c42\u8077\u8005","divider":true,"new":false,"target":"","active":false,"resumeAccessRestriction":""}, 3, 'children');headerMenuAdd.assign({ href: "/rms/candidate" }, 3, 'children', 2);headerMenuAdd.set({"text":"\u5c01\u9396\u6c42\u8077\u8005","divider":false,"new":false,"target":"","active":false,"resumeAccessRestriction":""}, 3, 'children');headerMenuAdd.assign({ href: "/blackData/blackDataList" }, 3, 'children', 3);headerMenuAdd.set({"name":"message","text":"\u806f\u7d61","href":"javascript:void(0);","target":"","className":"vip-msg","active":false,"gtmName":""});headerMenuAdd.set({"text":"\u806f\u7d61\u8a0a\u606f","divider":false,"new":false,"target":"","active":false,"resumeAccessRestriction":""}, 4, 'children');headerMenuAdd.assign({ disabled: true, title: "此功能您尚無權限使用，請洽貴公司主要人事聯絡人開放權限" }, 4, 'children', 0);headerMenuAdd.set({"text":"\u8996\u8a0a\u9762\u8ac7","divider":false,"new":false,"target":"","active":false,"resumeAccessRestriction":""}, 4, 'children');headerMenuAdd.assign({ href: "/voip/voipList" }, 4, 'children', 1);headerMenuAdd.set({"name":"ad","text":"\u8cfc\u8cb7","href":"javascript:void(0);","target":"","className":"vip-purchase","active":false,"gtmName":""});headerMenuAdd.set({"text":"\u7dda\u4e0a\u8cfc\u8cb7","divider":false,"new":false,"target":"","active":false,"resumeAccessRestriction":""}, 5, 'children');headerMenuAdd.assign({ disabled: true, title: "此功能您尚無權限使用，請洽貴公司主要人事聯絡人開放權限" }, 5, 'children', 0);headerMenuAdd.set({"text":"\u52a0\u5f37\u66dd\u5149","divider":false,"new":false,"target":"_blank","active":false,"resumeAccessRestriction":""}, 5, 'children');headerMenuAdd.assign({ href: "/productIntro/addList" }, 5, 'children', 1);headerMenuAdd.set({"text":"\u591a\u5143\u5fb5\u624d","divider":false,"new":false,"target":"_blank","active":false,"resumeAccessRestriction":""}, 5, 'children');headerMenuAdd.assign({ href: "/preLogin/imc" }, 5, 'children', 2);headerMenuAdd.set({"text":"\u5e33\u52d9\u4e2d\u5fc3","divider":true,"new":false,"target":"","active":false,"resumeAccessRestriction":""}, 5, 'children');headerMenuAdd.assign({ disabled: true, title: "此功能您尚無權限使用，請洽貴公司主要人事聯絡人開放權限" }, 5, 'children', 3);headerMenuAdd.set({"text":"\u52a0\u503c\u7d00\u9304","divider":false,"new":false,"target":"","active":false,"resumeAccessRestriction":""}, 5, 'children');headerMenuAdd.assign({ disabled: true, title: "此功能您尚無權限使用，請洽貴公司主要人事聯絡人開放權限" }, 5, 'children', 4);headerMenuAdd.set({"text":"\u4e0a\u50b3\u5408\u7d04","divider":false,"new":false,"target":"","active":false,"resumeAccessRestriction":""}, 5, 'children');headerMenuAdd.assign({ disabled: true, title: "此功能您尚無權限使用，請洽貴公司主要人事聯絡人開放權限" }, 5, 'children', 5);headerMenuAdd.set({"name":"companyReviews","text":"\u516c\u53f8\u8a55\u8ad6","href":"javascript:void(0);","target":"","className":"vip-companyReviews","active":false,"gtmName":"comment","resumeAccessRestriction":""});headerMenuAdd.set({"text":"\u7ba1\u7406\u8a55\u8ad6","divider":false,"new":false,"target":"","active":false,"resumeAccessRestriction":""}, 6, 'children');headerMenuAdd.assign({ href: "/companyReviews/reviewList" }, 6, 'children', 0);headerMenuAdd.set({"text":"\u6295\u7968\u67e5\u8a62","divider":false,"new":false,"target":"","active":false,"resumeAccessRestriction":""}, 6, 'children');headerMenuAdd.assign({ href: "/companyReviews/voteList" }, 6, 'children', 1);headerMenuAdd.set({"name":"account","text":"\u8a2d\u5b9a","href":"javascript:void(0);","target":"","className":"vip-setting","active":false,"gtmName":""});headerMenuAdd.set({"text":"\u5e33\u865f","divider":false,"new":false,"target":"","active":false,"resumeAccessRestriction":""}, 7, 'children');headerMenuAdd.assign({ href: "/account/accountList" }, 7, 'children', 0);headerMenuAdd.set({"text":"\u901a\u8a0a\u9304","divider":false,"new":false,"target":"","active":false,"resumeAccessRestriction":""}, 7, 'children');headerMenuAdd.assign({ href: "/contacts/contactsList" }, 7, 'children', 1);headerMenuAdd.set({"text":"\u4f7f\u7528\u7d00\u9304","divider":false,"new":false,"target":"","active":false,"resumeAccessRestriction":""}, 7, 'children');headerMenuAdd.assign({ href: "/history/logList" }, 7, 'children', 2);headerMenuAdd.set({"text":"\u4fe1\u51fd\u7bc4\u672c","divider":false,"new":false,"target":"","active":false,"resumeAccessRestriction":""}, 7, 'children');headerMenuAdd.assign({ href: "/rms/contactInfoTemplate" }, 7, 'children', 3);headerMenuAdd.set({"text":"\u514d\u8cbb\u5de5\u5177","divider":true,"new":false,"target":"","active":false,"resumeAccessRestriction":""}, 7, 'children');headerMenuAdd.assign({ href: "/intro/freeTools" }, 7, 'children', 4);headerMenuAdd.set({"name":"tanJi","text":"\u6253\u5de5\u63a2\u5409","href":"https:\/\/tanji.104.com.tw\/vip\/chat?utm_source=tanji&utm_medium=vip_pc&utm_campaign=header","target":"_blank","className":"vip-tanji","active":false,"gtmName":"tanji"});
+var headerMenuList = {
+    // 搜尋顯示
+    isSearchShow: true,
+    // 搜尋連結
+    searchUrl: '/search/searchResult',
+    // 搜尋連結
+    idSearchUrl: '/idSearch/SearchResult',
+    // 是否為一般公司，非傳保葬
+    isNormalCust: true,
+};
+
+function mixinObject(objs) {
+    return objs.reduce(function (r, o) {
+        o ? Object.keys(o).forEach(function (k) {
+            r[k] = o[k];
+        }) : null;
+        return r;
+    }, {});
+}
+
+// 結合選單列表加入權限判斷結果mixin
+(function() {
+    // 重新assign mixin結果給items (Header Component呈現依據)
+    headerMenuList.items = headerMenuAdd.get();
+    headerMenuList.items.unshift({
+        text: '首頁',
+        className: 'vip-home',
+        href: '/index/index',
+        active: 'menu__search_1' == ''
+    });
+})();
+</script>
+<script>
+var topAnnouncement = [];
+topAnnouncement[0] = { theme: "red" };topAnnouncement[1] = { theme: "red" };topAnnouncement[4] = { theme: "blue", isCloseActive: true };var headerAnnouncement = topAnnouncement.filter(function(item){ return item.texts && item.texts.length });
+
+// 塞入公告五: 落保客戶公告 from ./mainOutEnsureMessage.vue.php
+try{
+    if(outEnsure && outEnsure.texts && outEnsure.texts.length){
+        headerAnnouncement.push(outEnsure)
+        // 清空
+        outEnsure = null
+    }
+} catch(e) {
+    // console.log(e)
+}
+
+</script>
+<script>
+    var headerOptions = null;
+    if (window.mixinObject) {
+        headerOptions = mixinObject([headerBasic, headerMenuList, {
+            topAnnouncement: headerAnnouncement
+        }])
+    }
+    // 清空
+    headerBasic = null;
+    headerMenuList = null;
+    headerAnnouncement = null;
+</script>
+    <script>
+dataLayer = [];
+dataLayer.push({
+    custno: "130000000049773",
+    loginno: "313774697051430583",
+    industry: "1001001001"
+});
+</script>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-55V7QT');</script>
+<!-- End Google Tag Manager --></head>
+
+<body>
+    <script type="text/javascript" src="https://cdn.104.com.tw/recruitment/static/lib/ncc/logService.min.js"></script>
+    <script type="text/javascript" src="https://cdn.104.com.tw/recruitment/static/lib/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+    <!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-55V7QT"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager -->    <!-- 帳務中心 start -->
+    <form id="frmBilling" name="frmBilling" method="post" target="billing" action="https://billing-center.104.com.tw/billing/toBilling.jsp">
+        <input type="hidden" id="custNo" name="custNo" value="">
+        <input type="hidden" id="mdmKey" name="mdmKey" value="">
+        <input type="hidden" id="token" name="token" value="">
+    </form>
+    <!-- 帳務中心 end -->
+  
+    <!-- fixedbar抽屜 -->
+    <div class="sidebar-drawer">
+        <div class="sidebar-drawer-item">
+            <!-- BC溝通置放位置 -->
+            <div id="chatAppMini"></div>
+        </div>
+                <div class="sidebar-drawer-item">
+            <!-- chatbot wrap 給予 Vue 寫入內容的元件 -->
+            <div id="chatbot"></div>
+        </div>
+                <div class="sidebar-drawer-item">
+            <!-- 未來面試秘書置放位置 -->
+        </div>
+    </div>
+  
+
+    <!-- vue template -->
+    <div id="app"></div>
+        <script>
+        if (window.appInstance) {
+            window.appInstance.create();
+        }
+    </script>
+        <!-- vue template -->
+
+
+    <!-- vue logout template -->
+    <div id="VueLogoutModal"></div>
+    <!-- vue logout template -->
+        <!-- Chatbot -->
+    <!-- -->
+	<form id="frmFaqDetail" name="frmFaqDetail" method="post" target="_blank" action="/faq/crmSupport/detail">
+	    <input type="hidden" id="reaction_position" name="reaction_position" value="查詢>查詢人才>履歷詳細頁">
+	    <input type="hidden" id="reaction_search_kw" name="reaction_search_kw" value="查詢人才 履歷">
+	</form>
+    <script type="text/javascript" src="https://cdn.104.com.tw/chatbot/240702/js/chatbot.js?v=202408151851"></script>
+        <script type="application/json">
+        {
+            "gcm_sender_id": "103953800507"
+        }
+    </script>
+
+    <script type="text/javascript" src="https://static.104.com.tw/104main/vipphp/main/js/notification.js?v=202408151851"></script>
+
+            <script type="text/javascript" src="https://cdn.104.com.tw/recruitment/blogin/js/bLogin.js?v=202408151851"></script>
+        <script type="text/javascript" src="https://cdn.104.com.tw/recruitment/blogin/js/logoutModal.js?v=202408151851" defer="defer"></script>
+
+    <!-- third-party video sdk -->
+    <script type="text/javascript" defer src="https://player.vimeo.com/api/player.js"></script>
+    <script type="text/javascript" defer src="https://connect.facebook.net/zh_TW/sdk.js#xfbml=0&version=v16.0"></script>
+    <script type="text/javascript" defer src="https://www.youtube.com/iframe_api"></script>
+</body>
+</html>
