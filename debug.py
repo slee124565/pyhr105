@@ -21,7 +21,7 @@ if __name__ == '__main__':
     driver.get(url)
 
     # 等待頁面加載
-    time.sleep(3)
+    time.sleep(1.5)
 
     # 定位電子信箱（用戶名）輸入框
     username_input = driver.find_element(By.CSS_SELECTOR, 'input[data-qa-id="loginUserName"]')
@@ -38,9 +38,15 @@ if __name__ == '__main__':
     actions = ActionChains(driver)
     actions.move_to_element(login_button).click().perform()
 
+    # 顯示訊息並等待用戶按下 Enter
+    input("Check browser UI and press <Enter> to continue...")
+
     pass
 
-    # 等待頁面加載完成
-    time.sleep(5)
+    # 下載履歷
+    # 'https://vip.104.com.tw/search/SearchResumeMaster?idno=30000002614244&ec=12&c=130000000049773'
+
+    # 執行登出
+    # 'https://vip.104.com.tw/oidc/logout'
 
     driver.quit()
